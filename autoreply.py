@@ -3,18 +3,18 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 import datetime
 import os
 
-# ================== Railway 配置 ==================
-TOKEN = os.getenv("TOKEN")                    # ← 从 Railway Variables 读取
-OWNER_ID = int(os.getenv("OWNER_ID", "8260959315"))
+# ================== 直接写死（调试用） ==================
+TOKEN = "8616207021:AAFbbuQhUSAOOLYuSWP8mr31YF8cVjjfydg"
+OWNER_ID = 8260959315
 
-# 图片文件名（必须和上传到 GitHub 的图片文件名一致）
+# 图片文件名
 IMAGE_PATH = "synt.png"
 
 active_users = {}
 current_target = None
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🤖 很高兴接待您～\n有需要随时说")
+    await update.message.reply_text("🤖 很高兴接待您～")
 
 async def auto_reply_with_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat.type != "private":
@@ -28,13 +28,10 @@ async def auto_reply_with_image(update: Update, context: ContextTypes.DEFAULT_TY
     global current_target
     current_target = uid
 
-    # 通知主人
+    # 通知你
     await context.bot.send_message(
         chat_id=OWNER_ID,
-        text=f"🔔 新消息\n"
-             f"👤 {user.first_name} (@{user.username or '无'})\n"
-             f"🆔 `{uid}`\n"
-             f"💬 {text}"
+        text=f"🔔 新消息\n👤 {user.first_name} (@{user.username or '无'})\n🆔 `{uid}`\n💬 {text}"
     )
 
     # 自动回复
@@ -52,7 +49,7 @@ async def auto_reply_with_image(update: Update, context: ContextTypes.DEFAULT_TY
     try:
         with open(IMAGE_PATH, 'rb') as photo:
             await context.bot.send_photo(chat_id=uid, photo=InputFile(photo), caption=caption)
-    except Exception as e:
+    except:
         await update.message.reply_text(caption)
 
 async def owner_reply(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -74,7 +71,7 @@ def main():
         lambda u, c: owner_reply(u, c) if u.effective_user.id == OWNER_ID else auto_reply_with_image(u, c)
     ))
 
-    print("✅ 机器人已在 Railway 启动！")
+    print("✅ 机器人启动成功！（Token 已硬编码）")
     app.run_polling(drop_pending_updates=True)
 
 if __name__ == "__main__":
