@@ -14,7 +14,7 @@ active_users = {}
 current_target = None
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    await update.message.reply_text("🤖 很高兴接待您～")
+    await update.message.reply_text("很高兴接待您～宝宝")
 
 async def auto_reply_with_image(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if update.message.chat.type != "private":
