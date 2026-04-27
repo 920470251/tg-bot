@@ -35,7 +35,7 @@ async def auto_reply_with_image(update: Update, context: ContextTypes.DEFAULT_TY
     )
 
     # 自动回复
-    caption = """您好，这边的话门槛66r，然后会送一份花嫁申鹤的私房图包
+    caption = """您好宝宝，这边的话门槛66r，然后会送一份花嫁申鹤的私房图包
 
 ★★★★★★ 精修78p ★★★★★★
 
